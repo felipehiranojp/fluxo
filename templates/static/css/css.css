@@ -1,0 +1,64 @@
+h1 {
+  color: rgb(219, 24, 24);
+}
+
+body {
+  background-color: rgb(233, 232, 232);
+  margin: 2%;
+}
+
+div {
+  display: inline;
+  align-items: center;
+  
+}
+.div1 {
+  display: flex;
+  justify-content: space-around;
+  align-content: center;
+  background-color: rgb(172, 172, 172);
+  border-radius: 10px;
+}
+.div2 {
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  width: 100%;
+  background-color: rgb(233, 232, 232);
+  border-radius: 10px;
+}
+
+.div3 {
+  background-color: rgb(172, 172, 172);
+  display: inline-block;
+}
+
+p {
+  display: flex;
+  margin: 0%;
+  justify-items: center;
+  justify-content: center;
+}
+
+.containers {
+  display: flex;
+  background-color: rgb(172, 172, 172);
+  padding: 10px;
+  border-radius: 10px;
+
+}
+.form-control{
+  display:flex;
+
+}
+.alert{
+  background-color: rgb(248, 220, 196);
+}
+.d-grid{
+  display: flex!important;
+  justify-content: block!important;
+}
+.edicao_btn{
+  background-image: transparent !important;
+}
