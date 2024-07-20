@@ -83,7 +83,7 @@
     <!-- Formulario-------------------------------------------------------------------------->
     <div class="containers">
         <form action="{% url 'salvar' %}" method="POST">{% csrf_token %}
-            <input type="text" name="nome_projeto_btn" value="{{nome_proj_selecionado}}" style="display: none"><!-- botão apagado com nome do nome_projeto-->
+            <input type="text" name="nome_projeto_btn" value="{{nome_proj_selecionado}}" style=""><!-- botão apagado com nome do nome_projeto-->
             <div class="div3">
                 <p>Fase</p>
                 <select class="form-select" aria-label="Selecione a fase" name="nome_fase">
@@ -101,8 +101,12 @@
                 <input type="text" class="form-control" placeholder="Insira a descrição" name="nome_descricao" required>
             </div>
             <div class="div3">
+
+
                 <p>Data inicial</p>
-                <input type="date" class="form-control" name="nome_inicio_data" id="inicio_data" >
+                <input type="date" class="form-control"  name="nome_inicio_data" id="inicio_data" >
+            
+            
             </div>
             <div class="div3">
                 <p>Data Limite</p>
@@ -145,8 +149,17 @@
                         <th scope="row">{{ dado.id }}</th>
                         <td>{{ dado.fase }}</td>
                         <td>{{ dado.descricao }}</td>
-                        <td>{{ dado.inicio_data }}</td>
-                        <td>{{ dado.fim_data }}</td>
+                        {% if dado.inicio_data == none %}
+                            <td>-</td>  
+                        {% else %}
+                            <td> {{dado.inicio_data}}</td>
+                        {% endif %}
+                        
+                        {% if dado.fim_data == none %}
+                            <td>-</td>  
+                        {% else %}
+                            <td> {{dado.fim_data}}</td>
+                        {% endif %}
                         <td>{{ dado.responsavel }}</td>
                         <td>{{ dado.status }}</td>
                         <td>{{ dado.projeto }}</td>
@@ -163,8 +176,16 @@
                         <th scope="row">{{ dado.id }}</th>
                         <td>{{ dado.fase }}</td>
                         <td>{{ dado.descricao }}</td>
-                        <td>{{ dado.inicio_data }}</td>
-                        <td>{{ dado.fim_data }}</td>
+                        {% if dado.inicio_data == none %}
+                            <td>-</td>  
+                        {% else %}
+                            <td> {{dado.inicio_data}}</td>
+                        {% endif %}
+                        {% if dado.fim_data == none %}
+                            <td>-</td>  
+                        {% else %}
+                            <td> {{dado.fim_data}}</td>
+                        {% endif %}
                         <td>{{ dado.responsavel }}</td>
                         <td>{{ dado.status }}</td>
                         <td>{{ dado.projeto }}</td>

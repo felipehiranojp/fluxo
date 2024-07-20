@@ -31,32 +31,48 @@
         <button type="submit" class="btn btn-outline-success">Adicionar</button>
 
     </form>
-
-
     <br><br>
     <table class="table">
         <thead>
             <tr>
                 <th scope="col">Projeto</th>
+                <th scope="col">Delete</th>
+                <th scope="col">Duplicar</th>
+                
             </tr>
         </thead>
         <tbody>
             {% for projeto in projetos%}
             <tr>
-                <td>{{projeto}}</td>
+                <form action="{% url 'home'%}" method="POST">{% csrf_token %}
+                        <td>
+                                <button type="submit" class="btn btn-outline-secondary" name="proj_selecionado" value="{{projeto}}">{{projeto}}</button>
+                        </td>        
+                </form>
+                
+                
+                
                 <td>    
                     <form action="{% url 'apaga_projeto'%}" method="POST" >{% csrf_token %}
                         <button type="submit" class="btn btn-outline-danger" name="num_botao" value="{{projeto}}">Del</button>
                     </form>
                 </td>
+
+                <form action="{% url 'duplicar_projeto'%}" method="POST">{% csrf_token %}
+                        <td>
+                            <button value="{{projeto}}" name="proj_selecionado" class="btn btn-outline-secondary"><img src="static/img/copy.png" alt=""></button>
+                                
+                        
+                        </td>        
+                </form>
+
+
             </tr>
             {%endfor%}
 
 
         </tbody>
         </table>
-
-
 
 
 
