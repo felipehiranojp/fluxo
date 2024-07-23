@@ -13,12 +13,17 @@
     <link rel="stylesheet" href="{% static 'css/css.css' %}">
 </head>
 <body>
+    <form action="{% url 'home'%}" method="POST">{% csrf_token %}
+        <button>
+            <img src="{% static 'img/home.png' %}" alt="home">
+        </button>
+    </form>
 
     <h1>Duplicar Projeto</h1>
 
     <form action="{% url 'duplicar_dados'%}" method="POST">{% csrf_token %}
-        <input type="input" value="{{proj_adicionado}}" name="proj_selecionado">
-        <input type="text" class="form-control" placeholder="Digite o nome do novo Projeto" aria-label=".form-control-lg example" name="projeto_duplicado" required>
+        <input type="input" value="{{proj_adicionado}}" name="proj_selecionado" style="display: none">
+        <input type="text" class="form-control" placeholder="Digite o nome do novo Projeto" aria-label=".form-control-lg example" name="projeto_duplicado" required >
         <button type="submit" class="btn btn-outline-secondary">Duplicar</button>
     </form>
 

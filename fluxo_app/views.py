@@ -198,6 +198,6 @@ def duplicar_dados(request):
     
     for dado in dados:
         dados_novo=Tabela(fase=dado.fase,descricao=dado.descricao,inicio_data=dado.inicio_data,fim_data=dado.fim_data,responsavel=dado.responsavel,status=dado.status,projeto=projeto_duplicado)
-        dados_novo.save()
-
+    dados_novo.save()
+    request.session['valor']=projeto_duplicado
     return redirect('home')
