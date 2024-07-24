@@ -15,34 +15,27 @@
 </head>
 <body>
     <div class="div1">
+
+        
+        <!-- Titulo do Projeto---------------------------------------------------------------->    
+        <p class="fs-3 align-middle">Fluxo </p>
+        <!-- FIM Titulo do Projeto---------------------------------------------------------------->    
+
+        <div class="d-grid gap-2">
+          <button type="button" class="btn d-grid gap-2 btn-outline w-100 p-3 fs-2 justify-content-end" name="nome_projeto" value="{{nome_proj_selecionado}}">{{nome_proj_selecionado}}</button>
+        </div>
+        <!-- Fim Botão de Menu---------------------------------------------------------------->
+
+        <!-- Botão de Menu---------------------------------------------------------------->
         <form action="{% url 'editar_proj'%}" method="POST">{% csrf_token %}
             <button type="submit" class="edicao_btn"> 
             <img src="static/img/edit.png" alt="edição">
         </button>
-        
         </form>
-        <p class="fs-3 align-middle">Fluxo </p>
+        
 
-        <!-- Titulo do Projeto---------------------------------------------------------------->    
-        <div class="d-grid gap-2">
-            <button type="button" class="btn d-grid gap-2 btn-outline w-100 p-3 fs-2 justify-content-end" name="nome_projeto" value="{{nome_proj_selecionado}}">{{nome_proj_selecionado}}</button>
-        </div>
 
-        <!-- Seleção do projeto-------------------------------->
-        <div class="div3">
-            <form action="{% url 'home' %}" method="POST">{% csrf_token %}
-                Escolha o projeto
-                <select class="div3" aria-label="Default select example" name="proj_selecionado" required>
-                    <option selected></option>
-                    {% for projeto in lista_projetos %}
-                        <option value="{{ projeto }}">{{ projeto }}</option>
-                    {% endfor %}
-                </select>
-                <button type="submit" class="btn btn-outline-success">
-                    <img src="{% static 'img/atualizar.png' %}" alt="atualizar">
-                </button>
-            </form>
-        </div>
+
     </div>
     <!-- Fim Titulo do Projeto---------------------------------------------------------------->
     <div class="div2">
@@ -174,7 +167,7 @@
                     </tr>
                 {% else %}
                     <tr>
-                        <th scope="row">{{ dado.id }}</th>
+                        
                         <td>{{ dado.fase }}</td>
                         <td>{{ dado.descricao }}</td>
                         {% if dado.inicio_data == none %}

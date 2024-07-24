@@ -38,20 +38,20 @@
                 <th scope="col">Projeto</th>
                 <th scope="col">Delete</th>
                 <th scope="col">Duplicar</th>
+                <th scope="col">Editar nome projeto</th>
+
                 
             </tr>
         </thead>
         <tbody>
             {% for projeto in projetos%}
             <tr>
+                
                 <form action="{% url 'home'%}" method="POST">{% csrf_token %}
                         <td>
                                 <button type="submit" class="btn btn-outline-secondary" name="proj_selecionado" value="{{projeto}}">{{projeto}}</button>
                         </td>        
-                </form>
-                
-                
-                
+                    </form>
                 <td>    
                     <form action="{% url 'apaga_projeto'%}" method="POST" >{% csrf_token %}
                         <button type="submit" class="btn btn-outline-danger" name="num_botao" value="{{projeto}}">Del</button>
@@ -61,11 +61,26 @@
                 <form action="{% url 'duplicar_projeto'%}" method="POST">{% csrf_token %}
                         <td>
                             <button value="{{projeto}}" name="proj_selecionado" class="btn btn-outline-secondary"><img src="static/img/copy.png" alt=""></button>
-                                
                         
                         </td>        
                 </form>
-
+                                <!-- Botão de edição do nome-->
+                <td>
+                <div class="dropdown">
+                    <form action="{% url 'novo_nome' %}" method="POST">{%csrf_token%}
+                        <button class="btn btn-light dropdown-toggle" type="button" name="nome_antigo" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="static/img/lapis.png" alt="">
+                        </button>
+                        <input type="text" value="{{projeto}}" name = "nome_antigo" style="display: none;">
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <input class="div2" type="text" name="novo_nome_inserido" placeholder="Editar nome do projeto">
+                            <button type="submit" class="btn btn-secondary"> Atualizar nome</button>
+                        </ul>
+                        
+                    </form>
+                </div>
+                </td>
+                <!-- Fim do Botão de edição do nome-->
 
             </tr>
             {%endfor%}

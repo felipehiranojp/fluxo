@@ -26,8 +26,6 @@ def dados_grafico(nome_proj_selecionado):
     soma_concluido_5 = Tabela.objects.filter(projeto=nome_proj_selecionado, status='Concluido', fase=5).count()
     soma_concluido_6 = Tabela.objects.filter(projeto=nome_proj_selecionado, status='Concluido', fase=6).count()
     soma_concluido_7 = Tabela.objects.filter(projeto=nome_proj_selecionado, status='Concluido', fase=7).count()
-    print(soma_projetos_1,soma_projetos_2,soma_projetos_3,soma_projetos_4,soma_projetos_5,soma_projetos_6,soma_projetos_7)
-    print(soma_concluido_1,soma_concluido_2,soma_concluido_3,soma_concluido_4,soma_concluido_5,soma_concluido_6,soma_concluido_7)
     if soma_projetos_1 == 0: 
         razao_1 = 0
     else:
@@ -64,7 +62,6 @@ def home(request):
     nome_proj_selecionado=request.POST.get('proj_selecionado') #pega o projeto selecionado no botao invisivel
     if nome_proj_selecionado == None:
         nome_proj_selecionado =request.session.get('valor')
-    print(f'botao invisivel botao invisivel botao invisivel= {nome_proj_selecionado} ')
     request.session['valor']=nome_proj_selecionado# salva o nome do projeto na variavel valor
 
     if Tabela.objects.exists():
@@ -73,11 +70,9 @@ def home(request):
         return render(request, 'criar_proj.html')
 
     if request.method == "POST":
-        print(f'IF IF IF IF IF IF IF IF IF IF IF IF IF IF IF IF IF IF IF IF IF IF IF I VEM DO BOTAO ATT PROJETO ')
         
         nome_proj_selecionado = request.session.get('valor')  # Recupera o valor da session
         
-        print(f' nome_proj_selecionado nome_proj_selecionado nome_proj_selecionado {nome_proj_selecionado}')
         soma_proj_fase = dados_grafico(nome_proj_selecionado) # quantidade total de fases de cada projeto e a razão de soma/soma_projeto
         dados= Tabela.objects.order_by('fase').filter(projeto =nome_proj_selecionado)#pega os dados filtrados pela projeto selecionado pelo usuario
         return render(request,'home.html',{
@@ -87,8 +82,6 @@ def home(request):
             'dados':dados})
     else:
         
-        print('else else else else else else else else else else else else else else  VEM DA PÁGINA NOVA ')
-        print(nome_proj_selecionado)
         if nome_proj_selecionado is None:
             nome_proj_selecionado=Tabela.objects.order_by('id').last().projeto
             request.session['valor']=nome_proj_selecionado
@@ -110,21 +103,16 @@ def editar_proj(request):
 
 def delete(request):
     metodo = request.method
-    print(f'method delete = {metodo} method delete = {metodo} method delete = {metodo} method delete = {metodo} method delete = {metodo} ')
     id= request.POST.get('num_botao')
     nome_proj_selecionado=request.POST.get('proj_selecionado')
-    print(nome_proj_selecionado)
     item= Tabela.objects.get(id=id)
     item.delete()
         
-    print(f'O NOME DO PROJETO APAGADO É: {nome_proj_selecionado}')
     request.session['valor']=nome_proj_selecionado# salva o nome do projeto na variavel valor
     if Tabela.objects.filter(projeto=nome_proj_selecionado).exists():
-        print('if delete if delete if delete if delete if delete if delete if delete if delete if delete if delete if delete if delete if delete if delete ')
         lista_projetos = Lista_projetos()
         soma_proj_fase = dados_grafico(nome_proj_selecionado) # quantidade total de fases de cada projeto e a razão de soma/soma_projeto
         dados= Tabela.objects.order_by('fase').filter(projeto =nome_proj_selecionado)#pega os dados filtrados pela projeto selecionado pelo usuario
-        print('oi oi oi oi oi oi oi oi oi oi oi oi oiFOI PARA O QUEST DO HOME oi oi oi oi oi oi oi oi oi oi oi oi oi oi oi oi oi oi oi oi oi oi oi ')
         return redirect('home')
 def home2(request):
     
@@ -175,7 +163,6 @@ def alter(request):
     return redirect ('home')
 def apaga_projeto(request):
     nome_projeto = request.POST.get('num_botao')
-    print(f'o nome do projeto é {nome_projeto} o nome do projeto é {nome_projeto} o nome do projeto é {nome_projeto} o nome do projeto é {nome_projeto} o nome do projeto é {nome_projeto} o nome do projeto é {nome_projeto} ')
     Tabela.objects.filter(projeto=nome_projeto).delete()
     request.session['valor']=''
     return redirect('editar_proj')
@@ -190,14 +177,19 @@ def duplicar_projeto(request):
     
     return render(request, 'duplicar_projeto.html',{'proj_adicionado':proj_adicionado})
 def duplicar_dados(request):
-    proj_adicionado = request.POST.get('proj_selecionado')
-    projeto_duplicado = request.POST.get('projeto_duplicado')
-    
-    print(proj_adicionado)
-    dados=Tabela.objects.filter(projeto = proj_adicionado)
+    proj_selecionado = request.POST.get('proj_selecionado') # proj_selecionado= projeto que quero criar uma cópia
+    projeto_duplicado = request.POST.get('projeto_duplicado')# nome que será o nome do projeto copiado
+    dados=Tabela.objects.filter(projeto = proj_selecionado)
     
     for dado in dados:
         dados_novo=Tabela(fase=dado.fase,descricao=dado.descricao,inicio_data=dado.inicio_data,fim_data=dado.fim_data,responsavel=dado.responsavel,status=dado.status,projeto=projeto_duplicado)
-    dados_novo.save()
+        dados_novo.save()
     request.session['valor']=projeto_duplicado
+    return redirect('home')
+
+def novo_nome(request):
+    novo_nome_inserido= request.POST.get('novo_nome_inserido')
+    nome_antigo=request.POST.get('nome_antigo')
+    Tabela.objects.filter(projeto=nome_antigo).update(projeto=novo_nome_inserido)
+    request.session['valor']=novo_nome_inserido
     return redirect('home')
